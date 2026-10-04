@@ -1,0 +1,111 @@
+openapi: 3.0.0
+info:
+  title: Fastify High-Performance Microservice Engine
+  version: 1.0.0
+  description: Schema-First REST API Contracts for Fastify E-Commerce and Gateway
+paths:
+  /v1/orders/{orderId}:
+    get:
+      summary: Retrieve order details
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderRecord'
+  /v1/payments/verify:
+    post:
+      summary: Verify payment intent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - paymentId
+              properties:
+                paymentId:
+                  type: string
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  verified:
+                    type: boolean
+  /v1/users/me:
+    get:
+      summary: Retrieve current user identity
+      responses:
+        '200':
+          description: User identity
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - id
+                  - username
+                properties:
+                  id:
+                    type: string
+                  username:
+                    type: string
+                  legacyToken:
+                    type: string
+                    nullable: true
+                  authToken:
+                    type: string
+  /v1/metrics:
+    get:
+      summary: Health and operational metrics
+      responses:
+        '200':
+          description: Service telemetry
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  latencyMs:
+                    type: number
+                  debugHost:
+                    type: string
+
+components:
+  schemas:
+    OrderRecord:
+      type: object
+      required:
+        - id
+        - totalAmountCents
+        - status
+      properties:
+        id:
+          type: string
+        totalAmountCents:
+          type: integer
+        status:
+          type: string
+        billingAddress:
+          type: object
+          properties:
+            street:
+              type: string
+            city:
+              type: string
+            postalCode:
+              type: string
