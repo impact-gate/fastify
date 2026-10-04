@@ -14,12 +14,12 @@ paths:
           schema:
             type: string
       responses:
-        '200':
+        "200":
           description: Order details
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/OrderRecord'
+                $ref: "#/components/schemas/OrderRecord"
   /v1/payments/verify:
     post:
       summary: Verify payment intent
@@ -35,7 +35,7 @@ paths:
                 paymentId:
                   type: string
       responses:
-        '200':
+        "200":
           description: Verification result
           content:
             application/json:
@@ -48,7 +48,7 @@ paths:
     get:
       summary: Retrieve current user identity
       responses:
-        '200':
+        "200":
           description: User identity
           content:
             application/json:
@@ -71,7 +71,7 @@ paths:
     get:
       summary: Health and operational metrics
       responses:
-        '200':
+        "200":
           description: Service telemetry
           content:
             application/json:
@@ -84,7 +84,6 @@ paths:
                     type: number
                   debugHost:
                     type: string
-
 components:
   schemas:
     OrderRecord:
@@ -109,3 +108,7 @@ components:
               type: string
             postalCode:
               type: string
+        estimatedDeliveryDate:
+          type: string
+        trackingUrl:
+          type: string
